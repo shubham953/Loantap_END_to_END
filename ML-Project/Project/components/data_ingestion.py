@@ -1,9 +1,11 @@
+import sys
+sys.path.append('D:\Desktop\Loantap_END_to_END_CI_CD_MlOps_AWS\ML-Project')
 import os
 import urllib.request as request
-import pandas as pd
-from mlProject import logger
-from mlProject.utils.common import get_size
-from mlProject.entity.config_entity import DataIngestionConfig
+import zipfile
+from Project import logger
+from Project.utils.common import get_size
+from Project.entity.config_entity import DataIngestionConfig
 from pathlib import Path
 
 
@@ -26,13 +28,13 @@ class DataIngestion:
 
 
     
-    def extract_file(self):
+    def extract_zip_file(self):
         """
         zip_file_path: str
         Extracts the zip file into the data directory
         Function returns None
         """
-        path = self.config.output_dir
-        os.makedirs(path, exist_ok=True)
-        data=pd.read_csv(path)
-        data.to_csv(os.path.join(self.config.local_data_file, "test.csv"),index = False)
+        unzip_path = self.config.unzip_dir
+        os.makedirs(unzip_path, exist_ok=True)
+        with zipfile.ZipFile(self.config.local_data_file, 'r') as zip_ref:
+            zip_ref.extractall(unzip_path)

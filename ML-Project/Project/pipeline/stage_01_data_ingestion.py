@@ -1,6 +1,8 @@
-from src.mlProject.config.configuration import ConfigurationManager
-from src.mlProject.components.data_ingestion import DataIngestion
-from src.mlProject import logger
+import sys
+sys.path.append('D:\Desktop\Loantap_END_to_END_CI_CD_MlOps_AWS\ML-Project')
+from Project.config.configuration import ConfigurationManager
+from Project.components.data_ingestion import DataIngestion
+from Project import logger
 
 
 STAGE_NAME = "Data Ingestion stage"
@@ -16,7 +18,7 @@ class DataIngestionTrainingPipeline:
         data_ingestion_config = config.get_data_ingestion_config()
         data_ingestion = DataIngestion(config=data_ingestion_config)
         data_ingestion.download_file()
-        data_ingestion.extract_file()
+        data_ingestion.extract_zip_file()
 
 
 if __name__ == '__main__':

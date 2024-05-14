@@ -1,0 +1,33 @@
+COLUMNS:
+  loan_amnt             : float64
+  term                  :  object 
+  int_rate               : float64
+  installment           :  float64
+  grade                 :  object 
+  sub_grade             :  object 
+  emp_title             :  object 
+  emp_length            :  object 
+  home_ownership        :  object 
+  annual_inc            :  float64
+  verification_status   :  object 
+  issue_d               :  object 
+  loan_status           :  object 
+  purpose               :  object 
+  title                 :  object 
+  dti                   :  float64
+  earliest_cr_line      :  object 
+  open_acc              :  float64
+  pub_rec               :  float64
+  revol_bal             :  float64
+  revol_util            :  float64
+  total_acc             :  float64
+  initial_list_status   :  object 
+  application_type      :  object 
+  mort_acc              :  float64
+  pub_rec_bankruptcies  :  float64
+  address               :  object
+
+
+TARGET_COLUMN:
+  name: loan_status
+  

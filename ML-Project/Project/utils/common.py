@@ -1,8 +1,10 @@
+import sys
+sys.path.append('D:\Desktop\Loantap_END_to_END_CI_CD_MlOps_AWS\ML-Project')
 import os
 from box.exceptions import BoxValueError
 import json
 import yaml
-from mlProject import logger
+from Project import logger
 import joblib
 from ensure import ensure_annotations
 from box import ConfigBox
@@ -21,7 +23,9 @@ def read_yaml(path_to_yaml : Path)-> ConfigBox:
     Returns:
         ConfigBox: ConfigBox type    
     """
+    
     try:
+        
         with open(path_to_yaml) as yaml_file:
             content = yaml.safe_load(yaml_file)
             logger.info(f"yaml file: {path_to_yaml} loaded successfully")

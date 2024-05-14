@@ -1,6 +1,8 @@
-from mlProject.config.configuration import ConfigurationManager
-from mlProject.components.feature_engineering import Feature_Engineering
-from mlProject import logger
+import sys
+sys.path.append('D:\Desktop\Loantap_END_to_END_CI_CD_MlOps_AWS\ML-Project')
+from Project.config.configuration import ConfigurationManager
+from Project.components.feature_engineering import Feature_Engineering
+from Project import logger
 from pathlib import Path
 
 
@@ -20,7 +22,7 @@ class DataFeatureEngineeringPipeline:
             if status == "True":
                 config = ConfigurationManager()
                 data_feature_engineering_config = config.get_data_transformation_config()
-                data_feature_engineering = DataTransformation(config=data_feature_engineering_config)
+                data_feature_engineering = Feature_Engineering(config=data_feature_engineering_config)
                 data_feature_engineering.get_data()
 
             else:

@@ -7,7 +7,7 @@ class DataIngestionConfig:
     root_dir: Path
     source_URL: str
     local_data_file: Path
-    output_dir: Path
+    unzip_dir: Path
 
 
 
