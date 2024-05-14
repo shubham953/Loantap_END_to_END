@@ -1,25 +1,30 @@
+import sys
+sys.path.append('D:\Desktop\Loantap_END_to_END_CI_CD_MlOps_AWS\ML-Project')
 import os
 import pandas as pd
-from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
-from mlProject.utils.common import save_json
+import numpy as np
+import codecs, json 
+from Project.utils.common import save_json
 from urllib.parse import urlparse
 import numpy as np
 import joblib
-from mlProject.entity.config_entity import ModelEvaluationConfig
+from Project.entity.config_entity import ModelEvaluationConfig
 from pathlib import Path
-
+from sklearn.metrics import confusion_matrix, classification_report
 
 class ModelEvaluation:
     def __init__(self, config: ModelEvaluationConfig):
         self.config = config
 
     def eval_metrics(self,actual, pred):
-        rmse = np.sqrt(mean_squared_error(actual, pred))
-        mae = mean_absolute_error(actual, pred)
-        r2 = r2_score(actual, pred)
-        return rmse, mae, r2
+        classification = classification_report(actual, pred)
+        confusion = confusion_matrix(actual, pred)
+        
+        return classification ,confusion
 
-    
+
+
+
     def save_results(self):
 
         test_data = pd.read_csv(self.config.test_data_path)
@@ -30,8 +35,18 @@ class ModelEvaluation:
         
         predicted_qualities = model.predict(test_x)
 
-        (rmse, mae, r2) = self.eval_metrics(test_y, predicted_qualities)
+        (classification ,confusion) = self.eval_metrics(test_y, predicted_qualities)
         
         # Saving metrics as local
-        scores = {"rmse": rmse, "mae": mae, "r2": r2}
-        save_json(path=Path(self.config.metric_file_name), data=scores)
+        scores = {"classification_report":classification ,"confusion_matrix":confusion}
+     
+        # Convert NumPy array to list
+        confusion = confusion.tolist()
+
+        scores = {"classification_report": classification, "confusion_matrix": confusion}
+
+        # Writing the dictionary to a JSON file using Path
+        json_file_path = Path(self.config.metric_file_name)
+        with open(json_file_path, 'w') as json_file:
+            json.dump(scores, json_file)
+       

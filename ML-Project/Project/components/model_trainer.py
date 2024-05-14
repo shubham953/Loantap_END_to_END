@@ -1,10 +1,12 @@
+import sys
+sys.path.append('D:\Desktop\Loantap_END_to_END_CI_CD_MlOps_AWS\ML-Project')
 import pandas as pd
 import os
-from mlProject import logger
-from sklearn.linear_model import ElasticNet
-import joblib
-from mlProject.entity.config_entity import ModelTrainerConfig
+from Project import logger
 
+import joblib
+from Project.entity.config_entity import ModelTrainerConfig
+from sklearn.tree import DecisionTreeClassifier
 
 
 class ModelTrainer:
@@ -24,7 +26,8 @@ class ModelTrainer:
         test_y = test_data[[self.config.target_column]]
 
 
-        lr = ElasticNet(alpha=self.config.alpha, l1_ratio=self.config.l1_ratio, random_state=42)
-        lr.fit(train_x, train_y)
+        tree_clf = DecisionTreeClassifier(criterion='entropy', max_depth=2)
+        tree_clf.fit(  train_x,   train_y)
+       
 
-        joblib.dump(lr, os.path.join(self.config.root_dir, self.config.model_name))
+        joblib.dump(tree_clf, os.path.join(self.config.root_dir, self.config.model_name))

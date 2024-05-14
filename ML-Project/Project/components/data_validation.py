@@ -15,7 +15,7 @@ class DataValidation:
         try:
             validation_status = None
 
-            data = pd.read_csv(self.config.unzip_data_dir,sep='\t', lineterminator='\r')
+            data = pd.read_csv(self.config.unzip_data_dir)
             
             all_cols = list(data.columns)
             print(all_cols)

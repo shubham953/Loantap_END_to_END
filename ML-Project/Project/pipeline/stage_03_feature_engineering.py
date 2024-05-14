@@ -18,10 +18,11 @@ class DataFeatureEngineeringPipeline:
         try:
             with open(Path("artifacts/data_validation/status.txt"), "r") as f:
                 status = f.read().split(" ")[-1]
+                print(status)
 
             if status == "True":
                 config = ConfigurationManager()
-                data_feature_engineering_config = config.get_data_transformation_config()
+                data_feature_engineering_config = config.get_data_feature_engineering_config()
                 data_feature_engineering = Feature_Engineering(config=data_feature_engineering_config)
                 data_feature_engineering.get_data()
 
@@ -30,3 +31,12 @@ class DataFeatureEngineeringPipeline:
 
         except Exception as e:
             print(e)
+if __name__ == '__main__':
+    try:
+        logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
+        obj = DataFeatureEngineeringPipeline()
+        obj.main()
+        logger.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
+    except Exception as e:
+        logger.exception(e)
+        raise e        

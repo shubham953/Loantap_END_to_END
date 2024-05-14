@@ -1,9 +1,12 @@
-from mlProject import logger
-from mlProject.pipeline.stage_01_data_ingestion import DataIngestionTrainingPipeline
-from mlProject.pipeline.stage_02_data_validation import DataValidationTrainingPipeline
-from mlProject.pipeline.stage_03_data_transformation import DataTransformationTrainingPipeline
-from mlProject.pipeline.stage_04_model_trainer import ModelTrainerTrainingPipeline
-from mlProject.pipeline.stage_05_model_evaluation import ModelEvaluationTrainingPipeline
+import sys
+sys.path.append('D:\Desktop\Loantap_END_to_END_CI_CD_MlOps_AWS\ML-Project')
+from Project import logger
+from Project.pipeline.stage_01_data_ingestion import DataIngestionTrainingPipeline
+from Project.pipeline.stage_02_data_validation import DataValidationTrainingPipeline
+from Project.pipeline.stage_03_feature_engineering import DataFeatureEngineeringPipeline
+from Project.pipeline.stage_04_data_transformation import DataTransformationTrainingPipeline
+from Project.pipeline.stage_05_model_trainer import ModelTrainerTrainingPipeline
+from Project.pipeline.stage_06_model_evaluation import ModelEvaluationTrainingPipeline
 
 
 
@@ -34,7 +37,7 @@ except Exception as e:
 STAGE_NAME = "Data Transformation stage"
 try:
    logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<") 
-   data_ingestion = DataTransformationTrainingPipeline()
+   data_ingestion = DataFeatureEngineeringPipeline()
    data_ingestion.main()
    logger.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
 except Exception as e:
@@ -42,6 +45,15 @@ except Exception as e:
         raise e
 
 
+STAGE_NAME = "Data Transformation stage"
+try:
+   logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<") 
+   data_ingestion = DataTransformationTrainingPipeline()
+   data_ingestion.main()
+   logger.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
+except Exception as e:
+        logger.exception(e)
+        raise e
 
 STAGE_NAME = "Model Trainer stage"
 try:

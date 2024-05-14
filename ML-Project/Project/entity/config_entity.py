@@ -36,8 +36,8 @@ class ModelTrainerConfig:
     train_data_path: Path
     test_data_path: Path
     model_name: str
-    alpha: float
-    l1_ratio: float
+    # alpha: float
+    # l1_ratio: float
     target_column: str
 
 
@@ -47,6 +47,6 @@ class ModelEvaluationConfig:
     root_dir: Path
     test_data_path: Path
     model_path: Path
-    all_params: dict
+  
     metric_file_name: Path
     target_column: str

@@ -3,7 +3,7 @@ artifacts_root: artifacts
 
 data_ingestion:
   root_dir: artifacts/data_ingestion
-  source_URL: 'https://github.com/shubham953/Loantap_END_to_END_CI_CD_MlOps_AWS/blob/main/LoanTap.csv.zip'
+  source_URL: 'https://github.com/shubham953/Loantap_END_to_END_CI_CD_MlOps_AWS/raw/main/LoanTap.zip'
   local_data_file: artifacts/data_ingestion/data.zip
   unzip_dir: artifacts/data_ingestion
 
@@ -11,14 +11,14 @@ data_ingestion:
 
 data_validation:
   root_dir: artifacts/data_validation
-  unzip_data_dir: artifacts/data_ingestion/data.csv
+  unzip_data_dir: artifacts/data_ingestion/LoanTap.csv
   STATUS_FILE: artifacts/data_validation/status.txt
 
 
 
 data_transformation:
   root_dir: artifacts/data_transformation
-  data_path: artifacts/data_feature_engineering/data.csv
+  data_path: artifacts/feature_engineering/featured_data.csv
 
 
 
@@ -38,6 +38,7 @@ model_evaluation:
 
 feature_engineering:
   root_dir: artifacts/feature_engineering
-  test_data_path: artifacts/data_ingestion/Loantapipynb.ipynb
+  data_path: artifacts\data_ingestion\LoanTap.csv
+
  
   
