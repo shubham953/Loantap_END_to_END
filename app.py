@@ -22,27 +22,43 @@ def predict():
     request.form['intRate'],
     request.form['grade'],
     request.form['subGrade'],
-    request.form['empTitle'],
+    
     request.form['empLength'],
-    request.form['homeOwnership'],
+   
     request.form['annualInc'],
-    request.form['verificationStatus'],
-    request.form['issueD'],
-    request.form['loanStatus'],
-    request.form['purpose'],
-    request.form['title'],
+
     request.form['dti'],
-    request.form['earliestCrLine'],
+
+   
+   
+
+    
+    
+    
     request.form['openAcc'],
     request.form['pubRec'],
     request.form['revolBal'],
     request.form['revolUtil'],
     request.form['totalAcc'],
     request.form['initialListStatus'],
-    request.form['applicationType'],
+    
     request.form['mortAcc'],
     request.form['pubRecBankruptcies']
     ]
+
+    
+    data['grade'] = ord_enc.transform(data[['grade']])
+    data['sub_grade'] = ord_enc1.transform(data[['sub_grade']])
+
+    data['grade']=data['grade'].astype(float)
+    data['sub_grade']=data['subgrade'].astype(float)
+    
+    scaler= joblib.load("artifacts\model_trainer\model.joblib")
+    
+    
+    
+    data = scaler.transform(data)
+
 
 # Perform prediction or any other processing here
 # For example:
@@ -66,5 +82,5 @@ def predict():
 
 
 
-# if __name__ == "__main__":
-# 	app.run(host="0.0.0.0", port = 8080)
+if __name__ == "__main__":
+	app.run(host="0.0.0.0", port = 8080)

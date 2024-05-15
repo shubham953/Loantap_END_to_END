@@ -20,19 +20,16 @@ class DataTransformation:
         else:
             return mort_acc
         
-    def train_test_spliting(self):
-        data = pd.read_csv(self.config.data_path)
-        data.dropna(inplace=True)
-    
+
 
     def Transformed_data(self):
         
         data = pd.read_csv(self.config.data_path)
         
          # Dropping rows with null values - # do your own research
-        data.dropna(inplace=True)
-
         
+
+
         numerical_data = data.select_dtypes(include='number')
 
         num_cols = numerical_data.columns
@@ -47,7 +44,7 @@ class DataTransformation:
 
             lower_limit = mean-3*std
 
-            data.shape
+            
 
             data = data[(data[col]<upper_limit) & (data[col]>lower_limit)]
 
@@ -62,9 +59,12 @@ class DataTransformation:
         data['term']=data['term'].astype(int) 
         data['emp_length']=data['emp_length'].replace({'< 1 year':0, '1 year':1, '2 years':2, '3 years':3, '4 years':4, '5 years':5,'6 years':6, '7 years':7, '8 years':8, '9 years':9, '10+ years':10})
         data['initial_list_status'] = data.initial_list_status.replace({'w':0,'f':1})
+        data.dropna(inplace=True)
+        #droping columns for make prediction easier at app.py you can make good score but in this 
+        #the purpose is to deployee the model with fair f1 score
         data.drop(columns=['installment'], axis=1, inplace=True)
         data.drop(columns=['address'], axis=1, inplace=True)
-        data.drop(columns=['issue_d', 'emp_title', 'title', 'earliest_cr_line','home_ownership'], axis=1, inplace=True)
+        data.drop(columns=['issue_d', 'emp_title', 'title', 'earliest_cr_line','home_ownership','verification_status', 'application_type','purpose'], axis=1, inplace=True)
 
         label_grade = sorted(data.grade.unique())[::-1]
         label_sgrade = sorted(data.sub_grade.unique())[::-1]
@@ -78,9 +78,11 @@ class DataTransformation:
 
         data['sub_grade'] = ord_enc1.transform(data[['sub_grade']])
 
-        dummies = [ 'verification_status', 'application_type','purpose']
 
-        data = pd.get_dummies(data, columns=dummies, drop_first=True)
+
+        # dummies = [ 'verification_status', 'application_type','purpose']
+
+        # data = pd.get_dummies(data, columns=dummies, drop_first=True)
             # Saving mean of mort_acc according to total_acc_avg
             # Split the data into training and test sets. (0.75, 0.25) split.
         train, test = train_test_split(data)

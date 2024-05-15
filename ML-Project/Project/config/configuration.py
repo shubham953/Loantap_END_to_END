@@ -92,7 +92,7 @@ class ConfigurationManager:
             train_data_path = config.train_data_path,
             test_data_path = config.test_data_path,
             model_name = config.model_name,
-         
+            scaler_name =config.scaler_name,
             target_column = schema.name
             
             
@@ -111,7 +111,8 @@ class ConfigurationManager:
 
         model_evaluation_config = ModelEvaluationConfig(
             root_dir=config.root_dir,
-            test_data_path=config.test_data_path,
+            test_data_path_x=config.test_data_path_x,
+            test_data_path_y=config.test_data_path_y,
             model_path = config.model_path,
           
             metric_file_name = config.metric_file_name,

@@ -36,8 +36,8 @@ class ModelTrainerConfig:
     train_data_path: Path
     test_data_path: Path
     model_name: str
-    # alpha: float
-    # l1_ratio: float
+    scaler_name: str
+   
     target_column: str
 
 
@@ -45,7 +45,8 @@ class ModelTrainerConfig:
 @dataclass(frozen=True)
 class ModelEvaluationConfig:
     root_dir: Path
-    test_data_path: Path
+    test_data_path_x: Path
+    test_data_path_y: Path
     model_path: Path
   
     metric_file_name: Path

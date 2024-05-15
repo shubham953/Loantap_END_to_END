@@ -26,12 +26,12 @@ class ModelEvaluation:
 
 
     def save_results(self):
-
-        test_data = pd.read_csv(self.config.test_data_path)
+            
+        
         model = joblib.load(self.config.model_path)
 
-        test_x = test_data.drop([self.config.target_column], axis=1)
-        test_y = test_data[[self.config.target_column]]
+        test_x = np.load(self.config.test_data_path_x)
+        test_y = np.load(self.config.test_data_path_y)
         
         predicted_qualities = model.predict(test_x)
 
