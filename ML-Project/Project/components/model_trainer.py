@@ -9,6 +9,8 @@ from Project.entity.config_entity import ModelTrainerConfig
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.preprocessing import StandardScaler
 import numpy as np
+from imblearn.over_sampling import SMOTE
+from sklearn.model_selection import train_test_split
 class ModelTrainer:
     def __init__(self, config: ModelTrainerConfig):
         self.config = config
@@ -16,14 +18,15 @@ class ModelTrainer:
 
     
     def train(self):
-        train_data = pd.read_csv(self.config.train_data_path)
-        test_data = pd.read_csv(self.config.test_data_path)
+        data = pd.read_csv(self.config.train_data_path)
+        
+        X = data.drop('loan_status', axis=1)
+        y = data['loan_status']
 
+        SmoteBL = SMOTE(k_neighbors=5)
+        X_smote , y_smote = SmoteBL.fit_resample(X,y)
 
-        train_x = train_data.drop([self.config.target_column], axis=1)
-        test_x = test_data.drop([self.config.target_column], axis=1)
-        train_y = train_data[[self.config.target_column]]
-        test_y = test_data[[self.config.target_column]]
+        train_x, test_x, train_y, test_y = train_test_split(X_smote, y_smote, test_size=0.30,stratify=y_smote, random_state=42)
 
                 
         scaler = StandardScaler()
