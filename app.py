@@ -1,44 +1,70 @@
-
+import sys
+sys.path.append('D:\Desktop\Loantap_END_to_END_CI_CD_MlOps_AWS\ML-Project')
 from flask import Flask, render_template, request
 import os 
 import numpy as np
 import pandas as pd
-from mlProject.pipeline.prediction import PredictionPipeline
-
+from Project.pipeline.prediction import PredictionPipeline
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-@app.route("/ping", methods=['GET'])
-def ping():
-    return {"message": "Hi there, I'm working!!"}
-#defining the endpoint which will make the prediction
-@app.route("/predict", methods=['POST'])
-def prediction():
-    """ Returns loan application status using ML model
-    """
-    loan_req = request.get_json()
-    print(loan_req)
-    if loan_req['Gender'] == "Male":
-        Gender = 0
-    else:
-        Gender = 1
-    if loan_req['Married'] == "Unmarried":
-        Married = 0
-    else:
-        Married = 1
-    if loan_req['Credit_History'] == "Unclear Debts":
-        Credit_History = 0
-    else:
-        Credit_History = 1
+@app.route('/')
+def index():
+    return render_template('index.html')
 
-    ApplicantIncome = loan_req['ApplicantIncome']
-    LoanAmount = loan_req['LoanAmount']
+@app.route('/predict', methods=['POST'])
+def predict():
 
-    result = PredictionPipeline.predict([[Gender, Married, ApplicantIncome, LoanAmount, Credit_History]])
+    data = [
+    request.form['loanAmount'],
+    request.form['term'],
+    request.form['intRate'],
+    request.form['grade'],
+    request.form['subGrade'],
+    request.form['empTitle'],
+    request.form['empLength'],
+    request.form['homeOwnership'],
+    request.form['annualInc'],
+    request.form['verificationStatus'],
+    request.form['issueD'],
+    request.form['loanStatus'],
+    request.form['purpose'],
+    request.form['title'],
+    request.form['dti'],
+    request.form['earliestCrLine'],
+    request.form['openAcc'],
+    request.form['pubRec'],
+    request.form['revolBal'],
+    request.form['revolUtil'],
+    request.form['totalAcc'],
+    request.form['initialListStatus'],
+    request.form['applicationType'],
+    request.form['mortAcc'],
+    request.form['pubRecBankruptcies']
+    ]
 
-    if result == 0:
-        pred = "Rejected"
-    else:
-        pred = "Approved"
+# Perform prediction or any other processing here
+# For example:
+    try:
+        obj = PredictionPipeline()
+        predict = obj.predict(data)
+        if predict == 0:
+            pred = "Rejected"
+        elif(predict==1):
+            pred = "Approved"
+        else:
+            pred = "wrong input"  
 
-    return {"loan_approval_status": pred}
+        return render_template('result.html', prediction_result=pred)
+      
+    except:
+         return render_template('result.html')
+    
+    # return render_template('results.html', prediction = str(predict))
+
+
+
+
+# if __name__ == "__main__":
+# 	app.run(host="0.0.0.0", port = 8080)

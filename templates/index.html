@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Loan Prediction</h2>
+        <form id="loanForm" action="/predict" method="post">
+            <div class="form-group">
+                <label for="loanAmount">Loan Amount:</label>
+                <input type="number" id="loanAmount" name="loanAmount" required>
+            </div>
+            <div class="form-group">
+                <label for="term">Term:</label>
+                <input type="number" id="term" name="term" required>
+            </div>
+            <div class="form-group">
+                <label for="intRate">Interest Rate:</label>
+                <input type="number" id="intRate" name="intRate" required>
+            </div>
+            <div class="form-group">
+                <label for="grade">Grade:</label>
+                <select id="grade" name="grade" required>
+                    <!-- Options for grade -->
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <!-- Add more options if needed -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="subGrade">Sub Grade:</label>
+                <select id="subGrade" name="subGrade" required>
+                    <!-- Options for sub grade -->
+                    <option value="A1">A1</option>
+                    <option value="A2">A2</option>
+                    <!-- Add more options if needed -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="empTitle">Employer Title:</label>
+                <input type="text" id="empTitle" name="empTitle" required>
+            </div>
+            <div class="form-group">
+                <label for="empLength">Employment Length:</label>
+                <input type="number" id="empLength" name="empLength" required>
+            </div>
+            <div class="form-group">
+                <label for="homeOwnership">Home Ownership:</label>
+                <input type="text" id="homeOwnership" name="homeOwnership" required>
+            </div>
+            <div class="form-group">
+                <label for="annualInc">Annual Income:</label>
+                <input type="number" id="annualInc" name="annualInc" required>
+            </div>
+            <div class="form-group">
+                <label for="verificationStatus">Verification Status:</label>
+                <input type="text" id="verificationStatus" name="verificationStatus" required>
+            </div>
+            <div class="form-group">
+                <label for="issueD">Issue Date:</label>
+                <input type="text" id="issueD" name="issueD" required>
+            </div>
+            <div class="form-group">
+                <label for="loanStatus">Loan Status:</label>
+                <input type="text" id="loanStatus" name="loanStatus" required>
+            </div>
+            <div class="form-group">
+                <label for="purpose">Purpose:</label>
+                <input type="text" id="purpose" name="purpose" required>
+            </div>
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="dti">Debt-to-Income Ratio:</label>
+                <input type="number" id="dti" name="dti" required>
+            </div>
+            <div class="form-group">
+                <label for="earliestCrLine">Earliest Credit Line:</label>
+                <input type="text" id="earliestCrLine" name="earliestCrLine" required>
+            </div>
+            <div class="form-group">
+                <label for="openAcc">Open Accounts:</label>
+                <input type="number" id="openAcc" name="openAcc" required>
+            </div>
+            <div class="form-group">
+                <label for="pubRec">Public Records:</label>
+                <input type="number" id="pubRec" name="pubRec" required>
+            </div>
+            <div class="form-group">
+                <label for="revolBal">Revolving Balance:</label>
+                <input type="number" id="revolBal" name="revolBal" required>
+            </div>
+            <div class="form-group">
+                <label for="revolUtil">Revolving Utilization:</label>
+                <input type="number" id="revolUtil" name="revolUtil" required>
+            </div>
+            <div class="form-group">
+                <label for="totalAcc">Total Accounts:</label>
+                <input type="number" id="totalAcc" name="totalAcc" required>
+            </div>
+            <div class="form-group">
+                <label for="initialListStatus">Initial List Status:</label>
+                <input type="text" id="initialListStatus" name="initialListStatus" required>
+            </div>
+            <div class="form-group">
+                <label for="applicationType">Application Type:</label>
+                <input type="text" id="applicationType" name="applicationType" required>
+            </div>
+            <div class="form-group">
+                <label for="mortAcc">Mortgage Accounts:</label>
+                <input type="number" id="mortAcc" name="mortAcc" required>
+            </div>
+            <div class="form-group">
+                <label for="pubRecBankruptcies">Public Record Bankruptcies:</label>
+                <input type="number" id="pubRecBankruptcies" name="pubRecBankruptcies" required>
+            </div>
+            <button type="submit">Predict</button>
+        </form>
+    </div>
+    <title>Loan Prediction Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Loan Prediction Result</h2>
+        <div class="result">
+            <p>The predicted interest rate is: {{ prediction_result }}</p>
+        </div>
+    </div>
+</body>
+</body>
+
+</html>
+
+
+
+
+
