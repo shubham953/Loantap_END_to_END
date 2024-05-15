@@ -5,8 +5,8 @@ import os
 import numpy as np
 import pandas as pd
 from Project.pipeline.prediction import PredictionPipeline
-from flask import Flask, render_template, request
-
+from pathlib import Path
+import joblib
 app = Flask(__name__)
 
 @app.route('/')
@@ -47,19 +47,18 @@ def predict():
     ]
 
     
-    data['grade'] = ord_enc.transform(data[['grade']])
-    data['sub_grade'] = ord_enc1.transform(data[['sub_grade']])
 
-    data['grade']=data['grade'].astype(float)
-    data['sub_grade']=data['subgrade'].astype(float)
+    s=[]
+    s.append(data)
+    data = np.array(s)
     
-    scaler= joblib.load("artifacts\model_trainer\model.joblib")
+    scaler= joblib.load("artifacts\model_trainer\scaler.joblib")
     
     
     
     data = scaler.transform(data)
 
-
+    
 # Perform prediction or any other processing here
 # For example:
     try:
@@ -78,6 +77,7 @@ def predict():
          return render_template('result.html')
     
     # return render_template('results.html', prediction = str(predict))
+
 
 
 
